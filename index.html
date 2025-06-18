@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tài Xỉu MD5</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f0f0; text-align: center; padding: 30px; }
+    input, button { padding: 12px; font-size: 18px; margin-top: 10px; width: 90%; max-width: 360px; }
+    #result { margin-top: 20px; font-size: 20px; }
+    .tai { color: green; font-weight: bold; }
+    .xiu { color: blue; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>🎲 Tài Xỉu MD5</h1>
+  <input id="md5Input" type="text" placeholder="Nhập MD5 (32 ký tự)" />
+  <br>
+  <button onclick="duDoan()">Dự đoán</button>
+  <div id="result"></div>
+
+  <script>
+    function duDoan() {
+      const md5 = document.getElementById("md5Input").value.trim().toLowerCase();
+      const r = document.getElementById("result");
+      if (!/^[a-f0-9]{32}$/.test(md5)) {
+        r.innerHTML = "❌ MD5 không hợp lệ!";
+        return;
+      }
+      const d1 = (parseInt(md5.slice(-6, -4), 16) % 6) + 1;
+      const d2 = (parseInt(md5.slice(-4, -2), 16) % 6) + 1;
+      const d3 = (parseInt(md5.slice(-2), 16) % 6) + 1;
+      const tot = d1 + d2 + d3;
+      const res = tot >= 11 ? "Tài" : "Xỉu";
+      const cls = tot >= 11 ? "tai" : "xiu";
+      r.innerHTML = `
+        <p>Xúc xắc: ${d1} + ${d2} + ${d3} = <strong>${tot}</strong></p>
+        <p class="${cls}">👉 <strong>${res}</strong></p>
+      `;
+    }
+  </script>
+</body>
+</html>
